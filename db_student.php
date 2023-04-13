@@ -32,8 +32,6 @@ class DBStudent{
 
     function get_students(){
         $sql = "SELECT * FROM tblstudentinfo";
-        $row = $this->query(sql)->fetch_assoc(MYSQLI_ASSOC);
-        
-        return array($row['sid'], $row['sfname'], $row['slname'], $row['sdob'], $row['sgender'], $row['sphonenumber']);
+        return $this->query($sql);
     }
 }
