@@ -1,16 +1,7 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "ilovepython";
-$dbname = "dbstudentsystem";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require_once 'includes/header.php';
+require_once('db_student.php');
 
 $sid = (int)$_POST["sid"];
 $sfname = $_POST["sfname"];
@@ -19,13 +10,19 @@ $sdob = $_POST["sdob"];
 $sgender = $_POST["sgender"];
 $sphonenumber = $_POST["sphonenumber"];
 
-$sql = "INSERT INTO tblstudentinfo (seqno, sid, sfname, slname, sdob, sgender, sphonenumber)
-                                VALUES (NULL, '$sid', '$sfname', '$slname', '$sdob', '$sgender', '$sphonenumber')";
+$db_student = new DBStudent(DBStudent::getConnection());
 
-if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-}
+$db_student->add_student($sid, $sfname, $slname, $sdob, $sgender, $sphonenumber);
 
-$conn->close();
+?>
+
+<table>
+    <tr>
+        <th>Student ID:</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Date Of Birth</th>
+        <th>Gender</th>
+        <th>Phone Number</th>
+    </tr>
+</table>
